@@ -3,122 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Essay Builder</title>
+    <title>Academic Essay Builder - Pro</title>
     <style>
         :root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f9; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px 20px; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         
-        /* Input Controls */
         .input-group { margin-bottom: 25px; }
         label { font-weight: bold; display: block; margin-bottom: 8px; color: var(--primary); }
-        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 1.1rem; box-sizing: border-box; margin-bottom: 20px;}
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 1.1rem; box-sizing: border-box; }
         
+        /* Toolbar Styles */
+        .toolbar { 
+            background: #f8f9fa; padding: 8px; border: 1px solid #ccc; 
+            border-bottom: none; border-radius: 6px 6px 0 0; 
+            display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+        }
+        .toolbar button, .toolbar select { 
+            background: white; border: 1px solid #bbb; padding: 4px 8px; 
+            cursor: pointer; border-radius: 3px; font-size: 0.85rem;
+        }
+        .toolbar button:hover { background: #e9ecef; }
+        .toolbar select { cursor: pointer; }
+
         .section-wrapper { display: flex; gap: 20px; margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
         .input-area { flex: 2; }
         .guidance { flex: 1; background: #fcfcfc; padding: 15px; border-left: 4px solid var(--accent); font-size: 0.85rem; border-radius: 4px; }
         
-        textarea { width: 100%; height: 140px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; box-sizing: border-box; resize: vertical; }
+        .essay-part { 
+            width: 100%; min-height: 160px; padding: 15px; border: 1px solid #ccc; 
+            border-radius: 0 0 6px 6px; font-size: 16px; box-sizing: border-box; 
+            overflow-y: auto; background: white; line-height: 1.5;
+        }
         
         /* Academic Formatting for Output */
         .output-box { 
-            background: #fff; 
-            border: 1px solid #ddd; 
-            padding: 2in 1in; /* Mimics paper margins */
-            margin-top: 40px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: #fff; border: 1px solid #ddd; 
+            padding: 1in 0.75in; margin-top: 40px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto;
         }
         
         #finalEssay { 
             font-family: 'Times New Roman', Times, serif; 
-            font-size: 12pt; 
-            line-height: 2.0; /* Double spaced */
-            color: #000;
-            text-align: justify; /* Justified margins */
+            font-size: 12pt; line-height: 2.0; color: #000;
         }
 
-        .output-title { 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 14pt; 
-            margin-bottom: 24pt; 
-            display: block; 
-        }
+        .output-title { text-align: center; font-weight: bold; font-size: 14pt; margin-bottom: 24pt; display: block; }
 
-        /* This styles the paragraphs to have an indent */
         .essay-paragraph {
-            text-indent: 50px; /* Standard academic indent */
-            margin-bottom: 0; /* No extra space between paragraphs in formal papers */
-            display: block;
+            text-indent: 50px; margin-bottom: 0; display: block; white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .copy-btn { width: 100%; background: #27ae60; color: white; border: none; padding: 15px; border-radius: 6px; font-size: 1rem; cursor: pointer; margin-top: 20px; font-weight: bold; }
         .copy-btn:hover { background: #219150; }
-        .transition-tip { font-style: italic; color: #e67e22; display: block; margin-top: 8px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 style="text-align:center">Critical Analysis Essay Builder</h1>
+    <h1 style="text-align:center">Academic Essay Builder</h1>
 
     <div class="input-group">
         <label>Working Title</label>
         <input type="text" id="workingTitle" placeholder="Enter your essay title..." oninput="assembleEssay()">
     </div>
 
-    <!-- Intro -->
-    <div class="section-wrapper">
-        <div class="input-area">
-            <label>1. Introduction</label>
-            <textarea class="essay-part" placeholder="Hook, Summary, Thesis..."></textarea>
-        </div>
-        <div class="guidance">
-            <strong>Intro Checklist:</strong> Hook, Source Summary, Thesis.
-        </div>
-    </div>
-
-    <!-- Body Paragraphs 2-4 -->
-    <div class="section-wrapper">
-        <div class="input-area">
-            <label>2. Body Paragraph I</label>
-            <textarea class="essay-part" placeholder="Main idea, evidence, analysis..."></textarea>
-        </div>
-        <div class="guidance">
-            <strong>Body Checklist:</strong> Main Idea, 2 Evidences, Analysis, Thesis Link.
-            <span class="transition-tip">Transitions: "Furthermore," "Crucially,"</span>
-        </div>
-    </div>
-
-    <div class="section-wrapper">
-        <div class="input-area">
-            <label>3. Body Paragraph II</label>
-            <textarea class="essay-part" placeholder="Main idea, evidence, analysis..."></textarea>
-        </div>
-        <div class="guidance">
-            <span class="transition-tip">Transitions: "Conversely," "Specifically,"</span>
-        </div>
-    </div>
-
-    <div class="section-wrapper">
-        <div class="input-area">
-            <label>4. Body Paragraph III</label>
-            <textarea class="essay-part" placeholder="Main idea, evidence, analysis..."></textarea>
-        </div>
-        <div class="guidance">
-            <span class="transition-tip">Transitions: "Consequently," "In light of this,"</span>
-        </div>
-    </div>
-
-    <!-- Conclusion -->
-    <div class="section-wrapper" style="border:none">
-        <div class="input-area">
-            <label>5. Conclusion</label>
-            <textarea class="essay-part" placeholder="Restate thesis, synthesis, final thought..."></textarea>
-        </div>
-        <div class="guidance">
-            <strong>Conclusion Checklist:</strong> Restate Thesis, Synthesize points, Final Impression.
-        </div>
+    <div id="editor-container">
+        <!-- Reusable Block logic -->
+        <script>
+            const sections = ["Introduction", "Body Paragraph I", "Body Paragraph II", "Body Paragraph III", "Conclusion"];
+            sections.forEach((title, index) => {
+                document.write(`
+                    <div class="section-wrapper">
+                        <div class="input-area">
+                            <label>${index + 1}. ${title}</label>
+                            <div class="toolbar">
+                                <select onchange="execVal('fontName', this.value)">
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Courier New">Courier New</option>
+                                </select>
+                                <select onchange="execVal('fontSize', this.value)">
+                                    <option value="3">12pt (Normal)</option>
+                                    <option value="2">10pt (Small)</option>
+                                    <option value="4">14pt (Large)</option>
+                                    <option value="5">18pt (XL)</option>
+                                </select>
+                                <button onclick="format('bold')"><b>B</b></button>
+                                <button onclick="format('italic')"><i>I</i></button>
+                                <button onclick="format('underline')"><u>U</u></button>
+                            </div>
+                            <div class="essay-part" contenteditable="true" oninput="assembleEssay()"></div>
+                        </div>
+                        <div class="guidance">
+                            Focus on structure and clarity for the ${title}. 
+                        </div>
+                    </div>
+                `);
+            });
+        </script>
     </div>
 
     <h3>Final Academic Preview</h3>
@@ -129,27 +114,33 @@
         </div>
     </div>
     
-    <button class="copy-btn" onclick="copyText()">Copy Formatted Essay</button>
+    <button class="copy-btn" onclick="copyRichText()">Copy Formatted Essay</button>
 </div>
 
 <script>
-    const textareas = document.querySelectorAll('.essay-part');
+    function format(command) {
+        document.execCommand(command, false, null);
+    }
+
+    function execVal(command, value) {
+        document.execCommand(command, false, value);
+    }
+
     const titleInput = document.getElementById('workingTitle');
     const displayTitle = document.getElementById('displayTitle');
     const displayBody = document.getElementById('displayBody');
 
     function assembleEssay() {
-        // Update Title
+        const editors = document.querySelectorAll('.essay-part');
         displayTitle.innerText = titleInput.value.trim();
         
-        // Clear and Update Body with Paragraph divs for indenting
         displayBody.innerHTML = '';
-        textareas.forEach(textarea => {
-            const val = textarea.value.trim();
-            if (val !== "") {
+        editors.forEach(editor => {
+            const htmlContent = editor.innerHTML.trim();
+            if (htmlContent !== "" && htmlContent !== "<br>") {
                 const p = document.createElement('div');
                 p.className = 'essay-paragraph';
-                p.innerText = val;
+                p.innerHTML = htmlContent;
                 displayBody.appendChild(p);
             }
         });
@@ -159,22 +150,19 @@
         }
     }
 
-    function copyText() {
-        // We use a simple plain text copy with spacing for the title
-        let plainTextEssay = titleInput.value.toUpperCase() + "\n\n";
-        textareas.forEach(t => {
-            if(t.value.trim() !== "") {
-                plainTextEssay += "     " + t.value.trim() + "\n\n";
-            }
-        });
-        
-        navigator.clipboard.writeText(plainTextEssay);
-        alert("Essay copied! When you paste it into Word/Pages, the indents are represented by spaces.");
-    }
+    async function copyRichText() {
+        const area = document.getElementById('finalEssay');
+        const type = "text/html";
+        const blob = new Blob([area.innerHTML], { type });
+        const data = [new ClipboardItem({ [type]: blob })];
 
-    textareas.forEach(area => {
-        area.addEventListener('input', assembleEssay);
-    });
+        try {
+            await navigator.clipboard.write(data);
+            alert("Success! Formatting, fonts, and sizes preserved. Paste into Word or Docs.");
+        } catch (err) {
+            alert("Clipboard error. Please manually select and copy the text in the preview box.");
+        }
+    }
 </script>
 
 </body>
